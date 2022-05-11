@@ -1,3 +1,4 @@
+{%  set menus = menu_service.findAll %}
 <!DOCTYPE html>
 <html lang="fr">
 	<head>
@@ -27,7 +28,7 @@
 							<a class="dropdown-item" href="{{ path('admin') }}">Tableau de bord</a>
 						</li>
 						<li>
-							<a class="dropdown-item" href="#">Menu</a>
+							<a class="dropdown-item" href="{{ea_index('MenuCrudController')}}">Menu</a>
 						</li>
 					</ul>
 				</div>
@@ -53,6 +54,30 @@
 				</a>
 
 				<ul class="nav nav-pills">
+
+					{% for menu in menus %}
+
+						{% if menu.subMenus.count > 0 %}
+							<div class="dropdown">
+								<a class="nav nav-link dropdown-toggle text-dark" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+									{{menu.name}}
+								</a>
+								<ul class="dropdown-menu">
+									{% for subMenu in menu.subMenus %}
+										<li>
+											<a class="dropdown-item" href="{{ menu|menuLink }}">{{subMenu.name}}</a>
+										</li>
+									{% endfor %}
+								</ul>
+							</div>
+						{% else %}
+							<li class="nav-item">
+								<a class="nav-link text-dark" href="{{ menu|menuLink }}">{{menu.name}}</a>
+							</li>
+						{% endif %}
+
+					{% endfor %}
+
 					<li class="nav-item">
 						<a href="#" class="nav-link">S'inscrire</a>
 					</li>
@@ -75,4 +100,4 @@
 			</footer>
 		</div>
 	</body>
-</html>
+</html></body></html>
